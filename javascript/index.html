@@ -33,13 +33,24 @@
     <script>
 
         $('#send').on('click', function (e) {
-            if ($('#email').val() == '') {
+
+            const email = $('#email').val();
+            const password = $('#password').val();
+
+            if (email == '') {
                 alert('ID를 입력해주삼ㅋ');
                 return false;
-            } else if ($('#password').val() == '') {
+            } else {
+                if (!/\S+@\S+\.\S+/.test(email)) {
+                    alert('이메일 형식을 갖추셈');
+                    return false;
+                }
+            }
+
+            if (password == '') {
                 alert('비번을 입력해야지');
                 return false;
-            } else if (length($('#password').val()) < 6) {
+            } else if (length(password) < 6) {
                 alert('비번 더 길게 입력하삼');
                 return false;
             }
@@ -83,6 +94,74 @@
         <h4>Shirts on Sale</h4>
         <button id="login" class="btn btn-danger">로그인</button>
     </div>
+
+    <div style="overflow: hidden;">
+        <div class="slide-container">
+            <div class="slide-box">
+                <img src="car1.png">
+            </div>
+            <div class="slide-box">
+                <img src="car2.png">
+            </div>
+            <div class="slide-box">
+                <img src="car3.png">
+            </div>
+        </div>
+    </div>
+
+    <button class="previous">이전</button>
+    <button class="slide-1">1</button>
+    <button class="slide-2">2</button>
+    <button class="slide-3">3</button>
+    <button class="next">다음</button>
+
+    <script>
+
+        let now = 0;
+
+        $('.previous').on('click', function () {
+            if (now > 0) {
+                now -= 1;
+                $('.slide-container').css('transform', 'translateX(-' + now + '00vw)');
+            }
+        })
+        $('.slide-1').on('click', function () {
+            $('.slide-container').css('transform', 'translateX(0vw)');
+            now = 0;
+        })
+        $('.slide-2').on('click', function () {
+            $('.slide-container').css('transform', 'translateX(-100vw)');
+            now = 1;
+        })
+        $('.slide-3').on('click', function () {
+            $('.slide-container').css('transform', 'translateX(-200vw)');
+            now = 2;
+        })
+        $('.next').on('click', function () {
+            if (now < 2) {
+                now += 1;
+                $('.slide-container').css('transform', 'translateX(-' + now + '00vw)');
+            }
+        })
+    </script>
+
+
+    <div class="alert alert-danger">
+        <span id="sec">5</span>초 이내 구매 시 사은품 증정!
+    </div>
+
+    <script>
+
+        setInterval(function () {
+            if ($('#sec').html() > 1) {
+                $('#sec').html($('#sec').html() - 1)
+            } else {
+                $('.alert').hide();
+                return;
+            }
+        }, 1000);
+
+    </script>
 
     <script>
 
