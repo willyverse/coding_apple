@@ -14,6 +14,61 @@
 
 <body>
 
+    <nav class="navbar navbar-light bg-light">
+        <div class="container-fluid">
+            <span class="navbar-brand">김윌리샵</span>
+            <span class="badge bg-dark" id="dark_badge">Dark 🔄</span>
+            <button class="navbar-toggler" type="button">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+        </div>
+        <ul class="list-group">
+            <li class="list-group-item">An item</li>
+            <li class="list-group-item">A second item</li>
+            <li class="list-group-item">A third item</li>
+            <li class="list-group-item">A fourth item</li>
+            <li class="list-group-item">And a fifth one</li>
+        </ul>
+        <div class="scroll-progress-bar"
+            style="max-width: 100%; height: 5px; background: rgb(244, 3, 3); border-radius: 20px;">
+        </div>
+    </nav>
+
+    <script>
+
+        $('#dark_badge').on('click', function () {
+            if ($('#dark_badge').html() == 'Dark 🔄') {
+                $('#dark_badge').html('Light 🔄');
+                $('body').addClass('dark');
+            } else {
+                $('#dark_badge').html('Dark 🔄');
+                $('body').removeClass('dark');
+            }
+        });
+
+        $(window).on('scroll', function () {
+            if ($(window).scrollTop() > 30) {
+                $('.navbar-brand').css('font-size', '15px');
+            } else {
+                $('.navbar-brand').css('font-size', '25px');
+            }
+
+            var 스크롤양 = document.querySelector('html').scrollTop;  //현재 웹페이지 스크롤양
+            var 실제높이 = document.querySelector('html').scrollHeight; //현재 웹페이지 실제높이
+            var 현재높이 = document.querySelector('html').clientHeight; //현재 웹페이지 보이는 높이임
+
+            var 퍼센티지 = ((스크롤양 + 현재높이) / 실제높이) * 100;
+
+            if (스크롤양 > 0) {
+                $('.scroll-progress-bar').css('width', 퍼센티지 + '%');
+            } else {
+                $('.scroll-progress-bar').css('width', '0%');
+            }
+
+        })
+
+    </script>
+
     <div class="black-bg">
         <div class="white-bg">
             <h4>로그인하세요</h4>
@@ -56,44 +111,80 @@
             }
         });
 
-    </script>
+        $('.black-bg').on('click', function (e) {
 
-    <nav class="navbar navbar-light bg-light">
-        <div class="container-fluid">
-            <span class="navbar-brand">JS SHOP</span>
-            <span class="badge bg-dark" id="dark_badge">Dark 🔄</span>
-            <button class="navbar-toggler" type="button">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-        </div>
-    </nav>
+            // e.target; // 유저가 실제로 누른 것
+            // e.currentTarget; // 이벤트리스너가 달린 곳 == this;
+            // e.preventDefault(); // 기본 동작 막아줌
+            // e.stopPropagation(); // 이벤트버블링 중단해줌
 
-    <script>
-
-        $('#dark_badge').on('click', function () {
-            if ($('#dark_badge').html() == 'Dark 🔄') {
-                $('#dark_badge').html('Light 🔄');
-                $('body').addClass('dark');
-            } else {
-                $('#dark_badge').html('Dark 🔄');
-                $('body').removeClass('dark');
+            if (e.target == this) {
+                $('.black-bg').hide();
             }
-        });
+
+
+        })
 
     </script>
-
-    <ul class="list-group">
-        <li class="list-group-item">An item</li>
-        <li class="list-group-item">A second item</li>
-        <li class="list-group-item">A third item</li>
-        <li class="list-group-item">A fourth item</li>
-        <li class="list-group-item">And a fifth one</li>
-    </ul>
 
     <div class="main-bg">
         <h4>Shirts on Sale</h4>
         <button id="login" class="btn btn-danger">로그인</button>
     </div>
+
+    <script>
+
+        $('#login').on('click', function () {
+            $('.black-bg').fadeIn();
+        })
+
+        $('#close').on('click', function () {
+            $('.black-bg').hide();
+        })
+
+        $('.navbar-toggler')
+            .on('click', function () {
+                $('.list-group').toggleClass('show');
+            })
+
+    </script>
+
+
+    <!-- 스크롤하여 알럿 띄우기 -->
+
+    <div class="lorem" style="width: 300px; height: 100px; overflow-y: scroll;">
+        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quae voluptas voluptatum minus praesentium fugit
+        debitis at, laborum ipsa itaque placeat sit, excepturi eius. Nostrum perspiciatis, eligendi quae consectetur
+        praesentium exercitationem.
+    </div>
+
+    <script>
+
+        document.querySelector('.lorem').addEventListener('scroll', 알럿띄우기, { passive: true });
+
+        function 알럿띄우기() {
+            var 스크롤양 = document.querySelector('.lorem').scrollTop;
+            var 전체높이 = document.querySelector('.lorem').scrollHeight;
+            var 박스높이 = document.querySelector('.lorem').clientHeight;
+
+            let scheduledAnimationFrame = false;
+
+            if (scheduledAnimationFrame) {
+                return;
+            }
+
+            scheduledAnimationFrame = true;
+            requestAnimationFrame(function () {
+                if (스크롤양 + 박스높이 >= 전체높이 - 10) { // 10정도는 오차 허용
+                    alert('다 읽었군요~ 멋졍ㅋ');
+                }
+                scheduledAnimationFrame = true;
+            });
+        }
+
+    </script>
+
+    <!-- 슬라이드 배너 -->
 
     <div style="overflow: hidden;">
         <div class="slide-container">
@@ -160,23 +251,6 @@
                 return;
             }
         }, 1000);
-
-    </script>
-
-    <script>
-
-        $('#login').on('click', function () {
-            $('.black-bg').fadeIn();
-        })
-
-        $('#close').on('click', function () {
-            $('.black-bg').hide();
-        })
-
-        $('.navbar-toggler')
-            .on('click', function () {
-                $('.list-group').toggleClass('show');
-            })
 
     </script>
 
