@@ -118,7 +118,7 @@
             // e.preventDefault(); // 기본 동작 막아줌
             // e.stopPropagation(); // 이벤트버블링 중단해줌
 
-            if (e.target == this) {
+            if (e.target == e.currentTarget) {
                 $('.black-bg').hide();
             }
 
