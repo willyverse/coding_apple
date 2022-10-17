@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Javascript</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+    <link href="main.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.6.1.min.js"
+        integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
+</head>
+
+<body>
+
+    <div class="card-group container">
+        <div class="card">
+            <img src="https://via.placeholder.com/600">
+            <div class="card-body">
+                <h5>Card title</h5>
+                <p>가격: <span>70,000원</span></p>
+                <button class="btn btn-danger">주문하기</button>
+            </div>
+        </div>
+        <div class="card">
+            <img src="https://via.placeholder.com/600">
+            <div class="card-body">
+                <h5>Card title</h5>
+                <p>가격: <span>70,000원</span></p>
+                <button class="btn btn-danger">주문하기</button>
+            </div>
+        </div>
+        <div class="card">
+            <img src="https://via.placeholder.com/600">
+            <div class="card-body">
+                <h5>Card title</h5>
+                <p>가격: <span>70,000원</span></p>
+                <button class="btn btn-danger">주문하기</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        var products = [
+            { id: 0, price: 70000, title: 'Blossom Dress' },
+            { id: 1, price: 50000, title: 'Springfield Shirt' },
+            { id: 2, price: 60000, title: 'Black Mamba' },
+        ]
+
+        for (let i = 0; i < products.length; i++) {
+            let product = products[i];
+            $('.card-body h5').eq(product.id).html(product.title);
+            $('.card-body p span').eq(product.id).html(`${String(product.price).slice(0, 2)},${String(product.price).slice(2, 5)}원`);
+        }
+    </script>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3"
+        crossorigin="anonymous"></script>
+
+</body>
+
+</html>
