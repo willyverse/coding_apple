@@ -14,31 +14,26 @@
 
 <body>
 
-    <div class="card-group container">
-        <div class="card">
-            <img src="https://via.placeholder.com/600">
-            <div class="card-body">
+    <div class="container">
+        <div class="row">
+
+            <!-- <div class="col-sm-4">
+                <img src="https://via.placeholder.com/600" class="w-100">
                 <h5>Card title</h5>
-                <p>가격: <span>70,000원</span></p>
-                <button class="btn btn-danger">주문하기</button>
-            </div>
+                <p>가격 : 70000</p>
+            </div> -->
+
         </div>
-        <div class="card">
-            <img src="https://via.placeholder.com/600">
-            <div class="card-body">
-                <h5>Card title</h5>
-                <p>가격: <span>70,000원</span></p>
-                <button class="btn btn-danger">주문하기</button>
-            </div>
-        </div>
-        <div class="card">
-            <img src="https://via.placeholder.com/600">
-            <div class="card-body">
-                <h5>Card title</h5>
-                <p>가격: <span>70,000원</span></p>
-                <button class="btn btn-danger">주문하기</button>
-            </div>
-        </div>
+    </div>
+
+    <div class="container my-3">
+        <button class="btn btn-danger" id="price">가격오름차순</button>
+        <button class="btn btn-danger" id="title">상품명내림차순</button>
+        <button class="btn btn-danger" id="60000">6만원이하</button>
+    </div>
+
+    <div class="container">
+        <button class="btn btn-danger" id="more">더보기</button>
     </div>
 
     <script>
@@ -48,12 +43,76 @@
             { id: 2, price: 60000, title: 'Black Mamba' },
         ]
 
-        for (let i = 0; i < products.length; i++) {
-            let product = products[i];
-            $('.card-body h5').eq(product.id).html(product.title);
-            $('.card-body p span').eq(product.id).html(`${String(product.price).slice(0, 2)},${String(product.price).slice(2, 5)}원`);
+        function add_card(data) {
+            for (let i = 0; i < data.length; i++) {
+                var card = document.createElement('div');
+                card.className = 'col-sm-4';
+                var img = document.createElement('img');
+                img.src = 'https://via.placeholder.com/600';
+                img.className = 'w-100';
+                card.appendChild(img);
+                var title = document.createElement('h5');
+                var price = document.createElement('p');
+                title.innerHTML = data[i].title;
+                price.innerHTML = data[i].price;
+                card.appendChild(price);
+                card.appendChild(title);
+                $('.row').append(card);
+            }
         }
+
+        add_card(products);
+
+        var url_num = 1;
+
+        $('#more').on('click', function () {
+            $.get(`https://codingapple1.github.io/js/more${url_num}.json`)
+                .done(data => {
+                    add_card(data);
+                    url_num++;
+                    if (url_num > 2) {
+                        $('#more').hide();
+                    }
+                })
+        })
+
+        $('#price').on('click', function () {
+            var cards = $('.row').children();
+            cards.sort(function (a, b) {
+                return a.children[1].innerHTML - b.children[1].innerHTML;
+            });
+            $('.row').html(cards);
+        });
+
+        $('#title').on('click', function () {
+            var cards = $('.row').children();
+            cards.sort(function (a, b) {
+                return a.children[2].innerHTML > b.children[2].innerHTML ? -1 : a.children[2].innerHTML < b.children[2].innerHTML ? 1 : 0;
+            });
+            $('.row').html(cards);
+        });
+
+        $('#60000').on('click', function () {
+            var cards = $('.row').children();
+            console.log(cards);
+            var filtered = cards.filter(data => cards[data].children[1].innerHTML <= 60000);
+            $('.row').html(filtered);
+        });
+
+
     </script>
+
+    <script>
+
+        var array = [7, 3, 5, 2, 40];
+        array.sort(); // sort는 기본적으로 문자 정렬
+        // 숫자 정렬은 아래처럼 콜백 함수를 넣어줌
+        array.sort(function (a, b) {
+            return a - b;
+        })
+
+    </script>
+
 
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
