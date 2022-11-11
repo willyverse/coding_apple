@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://code.jquery.com/jquery-3.6.1.min.js"
+        integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
+    <link href="main.css" rel="stylesheet">
+</head>
+
+<body>
+    <div class="card-background">
+        <div class="card-box">
+            <img src="card1.png">
+        </div>
+        <div class="card-box">
+            <img src="card2.png">
+        </div>
+        <div class="card-box">
+            <img src="card3.png">
+        </div>
+    </div>
+    <script>
+
+        $(window).scroll(() => {
+            var height = $(window).scrollTop();
+            console.log(height);
+
+            // 650~1150까지 스크롤바를 내리면,
+            //     첫째 카드의 opacity 1 - 0으로 서서히 변경해주셈
+
+            // 1350~1850까지는 z
+
+            var y1 = (-1 / 500) * height + 23 / 10;
+            var z1 = (-1 / 5000) * height + 565 / 500;
+            var y2 = (-1 / 500) * height + 37 / 10;
+            var z2 = (-1 / 5000) * height + 1.27;
+
+            $('.card-box').eq(0).css('opacity', y1);
+            $('.card-box').eq(0).css('transform', `scale( ${z1} )`);
+            $('.card-box').eq(1).css('opacity', y2);
+            $('.card-box').eq(1).css('transform', `scale( ${z2} )`);
+
+        })
+    </script>
+</body>
+
+</html>
