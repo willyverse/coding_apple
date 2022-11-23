@@ -189,7 +189,7 @@
     <div style="overflow: hidden;">
         <div class="slide-container">
             <div class="slide-box">
-                <img src="car1.png">
+                <img src="car1.png" draggable="false">
             </div>
             <div class="slide-box">
                 <img src="car2.png">
@@ -199,6 +199,36 @@
             </div>
         </div>
     </div>
+
+    <script>
+
+        var startX = 0;
+        var moveX = 0;
+        var clickOn = false;
+
+        $('.slide-box').eq(0).on('mousedown', function (e) {
+            startX = e.clientX;
+            clickOn = true;
+            $('.slide-container').css('transition', 'none');
+        });
+
+        $('.slide-box').eq(0).on('mousemove', function (e) {
+            moveX = e.clientX - startX;
+            if (clickOn) {
+                $('.slide-container').css('transform', `translateX(${moveX}px)`);
+            }
+        });
+
+        $('.slide-box').eq(0).on('mouseup', function () {
+            clickOn = false;
+            if (moveX < -200) {
+                $('.slide-container').css('transition', '0.5s').css('transform', `translateX(-100vw)`);
+            } else {
+                $('.slide-container').css('transform', `translateX(0vw)`);
+            }
+        });
+
+    </script>
 
     <button class="previous">이전</button>
     <button class="slide-1">1</button>
