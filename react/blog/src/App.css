@@ -55,3 +55,22 @@ div {
   text-align: left;
   border-bottom: 1px solid grey;
 }
+
+.modal {
+  background: lightgrey;
+  width: 100%;
+  text-align: left;
+  padding: 10px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.modal h4 {
+  margin-top: 0px;
+  margin-bottom: 5px;
+}
+
+.modal p {
+  margin-top: 0px;
+  margin-bottom: 5px;
+}
