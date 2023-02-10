@@ -68,7 +68,8 @@ let App = () => {
       }
       <input onChange={(e) => {
         setInputValue(e.target.value);
-      }}></input>
+      }}
+        value={inputValue}></input>
       <button onClick={() => {
         let titleCopy = [...title];
         let countCopy = [...count];
@@ -78,8 +79,9 @@ let App = () => {
         }
         setTitle(titleCopy);
         setCount(countCopy);
+        setInputValue('');
       }}>글추가</button>
-    </div>
+    </div >
   );
 }
 
