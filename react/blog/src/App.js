@@ -10,6 +10,7 @@ let App = () => {
   let [count, setCount] = useState(countArray);
   const modalArray = new Array(title.length).fill(false);
   let [modal, setModal] = useState(modalArray);
+  let [inputValue, setInputValue] = useState('');
 
   return (
     <div className="App">
@@ -27,28 +28,37 @@ let App = () => {
         title.map(function (a, i) {
           return (
             <div className="list">
-              <h4 style={{ display: 'flex' }}>
-                <span onClick={() => {
-                  let copyModal = [...modal];
-                  if (modal[i]) {
-                    copyModal[i] = false;
-                    setModal(copyModal);
-                  } else {
-                    copyModal[i] = true;
-                    setModal(copyModal);
-                  }
-                }}>{title[i]}
-                </span>
-                <span onClick={() => {
+              <h4 onClick={() => {
+                let copyModal = [...modal];
+                if (modal[i]) {
+                  copyModal[i] = false;
+                  setModal(copyModal);
+                } else {
+                  copyModal[i] = true;
+                  setModal(copyModal);
+                }
+              }}>
+                {title[i]}
+                <span onClick={(e) => {
+                  e.stopPropagation(); // 상위 태그의 이벤트 버블링 방지
                   let countCopy = [...count];
                   countCopy[i] += 1;
                   setCount(countCopy);
                 }}>
                   &nbsp;😍
                 </span>
-                {count[i]}
+                {count[i]}&nbsp;
+                <button onClick={(e) => {
+                  e.stopPropagation();
+                  let titleCopy = [...title];
+                  let countCopy = [...count];
+                  titleCopy.splice(i, 1);
+                  countCopy.splice(i, 1);
+                  setTitle(titleCopy);
+                  setCount(countCopy);
+                }}>글삭제</button>
               </h4>
-              <p>2월 8일 발행</p>
+              <p>2월 11일 발행</p>
               {
                 modal[i] ? <Modal title={title} num={i} setTitle={setTitle} /> : null
               }
@@ -56,6 +66,19 @@ let App = () => {
           )
         })
       }
+      <input onChange={(e) => {
+        setInputValue(e.target.value);
+      }}></input>
+      <button onClick={() => {
+        let titleCopy = [...title];
+        let countCopy = [...count];
+        if (inputValue.length > 0) {
+          titleCopy.unshift(inputValue);
+          countCopy.unshift(0);
+        }
+        setTitle(titleCopy);
+        setCount(countCopy);
+      }}>글추가</button>
     </div>
   );
 }
