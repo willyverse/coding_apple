@@ -1,25 +1,34 @@
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
+import data from './data';
+import { useState } from 'react';
+import { Routes, Route, Link, useNavigate, Outlet } from 'react-router-dom';
+import Detail from './pages/detail';
+
+
+
 
 function App() {
+
+  let [shoes, setShoes] = useState(data);
+  let navigate = useNavigate();
+
   return (
     <div className="App">
-      <Button variant="primary">Primary</Button>
       <Navbar bg="dark" variant="dark" expand="lg">
         <Container>
-          <Navbar.Brand href="#home">ChandongShop</Navbar.Brand>
+          <Navbar.Brand href="/">ChandongShop</Navbar.Brand>
           <Navbar.Toggle aria-controls='basic-navbar-nav' />
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="me-auto">
-              <Nav.Link href="#home">Home</Nav.Link>
-              <Nav.Link href="#link">Link</Nav.Link>
+              <Nav.Link onClick={() => { navigate('/') }}>Home</Nav.Link>
+              <Nav.Link onClick={() => { navigate('/detail') }}>Link</Nav.Link>
               <NavDropdown title="Dropdown" id="basic-nav-dropdown">
                 <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
                 <NavDropdown.Item href="#action/3.2">
@@ -35,28 +44,53 @@ function App() {
           </Navbar.Collapse>
         </Container>
       </Navbar>
-      <div className="main-bg"></div>
-      <Container>
-        <Row>
-          <Col>
-            <img src='https://codingapple1.github.io/shop/shoes1.jpg' width='80%' />
-            <h4>상품명</h4>
-            <p>상품설명</p>
-          </Col>
-          <Col>
-            <img src='https://codingapple1.github.io/shop/shoes2.jpg' width='80%' />
-            <h4>상품명</h4>
-            <p>상품설명</p>
-          </Col>
-          <Col>
-            <img src='https://codingapple1.github.io/shop/shoes3.jpg' width='80%' />
-            <h4>상품명</h4>
-            <p>상품설명</p>
-          </Col>
-        </Row>
-      </Container>
+      <Routes>
+        <Route path='/' element={
+          <>
+            <div className="main-bg"></div>
+            <Container>
+              <Row>
+                {
+                  shoes.map((shoe) => {
+                    return (
+                      <Item item={shoe}></Item>
+                    )
+                  })
+                }
+              </Row>
+            </Container>
+          </>} />
+        <Route path='/detail' element={<Detail></Detail>} />
+        <Route path='/about' element={<About />}>
+          <Route path='member' element={<div>멤버임</div>} />
+        </Route>
+        <Route path='*' element={<div>없는 페이지에용</div>} />
+      </Routes>
     </div>
   );
+}
+
+let About = () => {
+  return (
+    <div>
+      <h4>회사 정보임</h4>
+      <Outlet></Outlet>
+    </div>
+  );
+}
+
+let Item = (props) => {
+  let item = props.item;
+  let id = props.item.id;
+  let source = `https://codingapple1.github.io/shop/shoes${id + 1}.jpg`
+
+  return (
+    <Col>
+      <img src={source} width='80%' />
+      <h4>{item.title}</h4>
+      <p>{item.content}</p>
+    </Col>
+  )
 }
 
 export default App;

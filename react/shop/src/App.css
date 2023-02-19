@@ -40,7 +40,7 @@
 
 .main-bg {
   height: 300px;
-  background-image: url(https://codingapple1.github.io/shop/shoes1.jpg);
+  background-image: url(../public/willyverse.jpg);
   background-size: cover;
   background-position: center;
 }
